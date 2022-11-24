@@ -6,7 +6,7 @@
   border: none;
   background-color: #017365ff;
   color: white;
-  font-size: clamp(1rem, 3vw, 1.3rem);
+  font-size: clamp(1rem, 2vw, 1.3rem);
   border-radius: 12px;
   padding: 3px 12px 3px 12px;
   box-shadow: 1px 1px 2px black;
@@ -53,7 +53,7 @@ header {
   header a {
     color: white; }
     header a:hover {
-      color: #31a194; }
+      color: #59e0d0; }
 
 body a {
   text-decoration: none;
@@ -81,18 +81,26 @@ main {
   display: flex;
   gap: 25px;
   align-items: center;
-  justify-content: space-around;
   flex-direction: column; }
 
 textarea {
   resize: vertical; }
 
 form {
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  width: clamp(250px, 70vw, 600px);
-  gap: 15px; }
+  width: clamp(250px, 70vw, 500px);
+  gap: 15px;
+  background-color: #696969ff;
+  border-radius: 16px;
+  box-shadow: 0px 0px 6px 2px black; }
+  form p {
+    font-size: 0.9rem; }
+    form p a {
+      color: #59e0d0; }
+      form p a:hover {
+        color: #31a194; }
   form .input_wrapper, form fieldset {
     display: flex;
     flex-wrap: wrap;
@@ -102,7 +110,7 @@ form {
     form .input_wrapper > *:first-child, form fieldset > *:first-child {
       width: 120px;
       flex-shrink: 0;
-      font-size: 1.2rem; }
+      font-size: 1rem; }
     form .input_wrapper > *:last-child, form fieldset > *:last-child {
       flex-grow: 1;
       flex-basis: 150px; }
@@ -131,5 +139,11 @@ footer {
   footer img {
     width: 36px;
     height: 36px; }
+
+@media (max-width: 700px) {
+  header {
+    flex-direction: column; }
+  body {
+    grid-template-rows: 130px auto 100px; } }
 
 /*# sourceMappingURL=layout.css.map */

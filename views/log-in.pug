@@ -1,4 +1,26 @@
 extends layout
 
 block content
-  h1= title
+  form(action="" method="POST") 
+    h1= title
+    p Don't have an account? 
+      a(href="/user/sign-up") Sign Up
+    .input_wrapper
+      label.form-label(for="username") User Name:
+      input#name.form-control.form-control-sm(
+        type="text",
+        name="username",
+        minlength="3",
+        maxlength="25",
+        placeholder="User Name",
+        required
+      )
+    .input_wrapper
+      label.form-label(for="password") Password:
+      input#name.form-control.form-control-sm(
+        type="password",
+        name="password",
+        minlength="6",
+        required
+      )
+    button Log In

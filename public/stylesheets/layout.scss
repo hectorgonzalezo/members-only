@@ -9,7 +9,7 @@
   border: none;
   background-color: $pine-green;
   color: white;
-  font-size: clamp(1rem, 3vw, 1.3rem);
+  font-size: clamp(1rem, 2vw, 1.3rem);
   border-radius: 12px;
   padding: 3px 12px 3px 12px;
   box-shadow: 1px 1px 2px black;
@@ -66,7 +66,7 @@ header {
   a{
     color: white;
     &:hover{
-      color: $pine-green-3;
+      color: $pine-green-light;
     }
   }
 }
@@ -102,7 +102,6 @@ main {
   display: flex;
   gap: 25px;
   align-items: center;
-  justify-content: space-around;
   flex-direction: column;
 }
 
@@ -111,11 +110,23 @@ textarea{
 }
 
 form{
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  width: clamp(250px, 70vw, 600px);
+  width: clamp(250px, 70vw, 500px);
   gap: 15px;
+  background-color: $dim-gray;
+  border-radius: 16px;
+  box-shadow: 0px 0px 6px 2px black;
+  p{
+    font-size: 0.9rem;
+    a {
+      color: $pine-green-light;
+      &:hover{
+        color: $pine-green-3;
+      }
+    }
+  }
   .input_wrapper, fieldset{
     display: flex;
     flex-wrap: wrap;
@@ -125,7 +136,7 @@ form{
     & > *:first-child{
       width: 120px;
       flex-shrink: 0;
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
     & > *:last-child{
       flex-grow: 1;
@@ -168,4 +179,13 @@ footer {
     width: 36px;
     height: 36px;
   }
+}
+
+@media (max-width: 700px) {
+  header{
+    flex-direction: column;
+  }
+  body{
+    grid-template-rows: 130px auto 100px;
+   }
 }

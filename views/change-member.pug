@@ -1,4 +1,15 @@
 extends layout
 
 block content
-  h1= title
+  form(action="" method="POST") 
+    h1= title
+    p Wanna be a member? Please write the secret password:
+    .input_wrapper
+      label.form-label(for="password") Password:
+      input#name.form-control.form-control-sm(
+        type="password",
+        name="password",
+        minlength="6",
+        required
+      )
+    button Add member Status
