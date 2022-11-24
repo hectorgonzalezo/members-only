@@ -16,17 +16,18 @@ html(lang="en")
   body 
     |
     header
-      h1 Members only
+      h1
+        a(href="/") Members only
       ul 
         |
         li
-          a(href="/sign-up") 
+          a(href="/user/sign-up") 
             button 
               i.fa-solid.fa-user-plus.fa-xs
               |Sign up
         li 
           |
-          a(href="/log-in") 
+          a(href="/user/log-in") 
             button 
               i.fa-solid.fa-right-to-bracket.fa-xs
               | Log In
@@ -36,7 +37,7 @@ html(lang="en")
 
     footer
       h1 Hector González Orozco
-      a(href="https://github.com/hectorgonzalezo/instrument-shop") 
+      a(href="https://github.com/hectorgonzalezo/members-only") 
         |
         |
         |
