@@ -1,0 +1,165 @@
+@import "./reset.css";
+@import "variables";
+
+:root {
+  font-size: clamp(13px, 3vw, 16px);
+}
+
+:root button{
+  border: none;
+  background-color: $pine-green;
+  color: white;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  border-radius: 12px;
+  padding: 3px 12px 3px 12px;
+  box-shadow: 1px 1px 2px black;
+  position: relative;
+  &:hover{
+    background-color: $pine-green-2;
+    cursor: pointer;
+  }
+  &:active{
+    top: 1px;
+    left: 1px;
+  }
+  i{
+    margin-right: 5px;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.title {
+  color: $dim-gray;
+  font-size: 4rem;
+}
+
+.subtitle {
+  color: $dim-gray;
+  font-size: 2.5rem;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 80px auto 50px;
+  height: 100vh;
+  & > * {
+    padding: 20px;
+  }
+}
+
+header {
+  background-color: $eerie-black-2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+}
+
+:root a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  gap: 30px;
+  & > a:first-child {
+    justify-self: center;
+  }
+}
+
+main {
+  background-color: $jet;
+  color: white;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+textarea{
+  resize: vertical;
+}
+
+form{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: clamp(250px, 70vw, 600px);
+  gap: 15px;
+  .input_wrapper, fieldset{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    & > *:first-child{
+      width: 120px;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+    & > *:last-child{
+      flex-grow: 1;
+      flex-basis:150px;
+    }
+
+    input[type="number"], select {
+      max-width: 70px;
+    }
+  }
+  button{
+    align-self: center;
+  }
+
+  .categories_form{
+    display: grid;
+    font-size: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 5px;
+    .category_form{
+      display: flex;
+      gap: 5px;
+    }
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  background-color: $jet;
+  color: white;
+
+  h1{
+    font-size: 1.5rem;
+  }
+
+  img{
+    width: 36px;
+    height: 36px;
+  }
+}
