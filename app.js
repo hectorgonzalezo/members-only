@@ -5,6 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
@@ -37,17 +38,22 @@ app.set('view engine', 'pug');
 // use local strategy (username, password) to log in
 passport.use(
   new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+    User.findOne({ username }, (err, user) => {
       if (err) { 
         return done(err);
       }
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-      return done(null, user);
+      // compare password with hashed password in database
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          // passwords match! log user in
+          return done(null, user)
+        }
+        // passwords do not match!
+        return done(null, false, { message: "Incorrect password" })
+      })
     });
   })
 );
@@ -67,6 +73,12 @@ passport.deserializeUser((id, done) => {
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize())
 app.use(passport.session())
+// allow access to currenUser variable in views
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  res.locals.session = req.session;
+  next();
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

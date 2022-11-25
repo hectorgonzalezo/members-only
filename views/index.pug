@@ -2,8 +2,7 @@ extends layout
 
 block content
   h1= title
-  if user
-    h2 Welcome Back #{user.name}
-    p= user
+  if currentUser !== undefined
+    h2 Welcome back #{currentUser.firstName}
   else
     h2 Welcome to #{ title }

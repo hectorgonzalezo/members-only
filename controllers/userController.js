@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 const aysnc = require("async");
 
 
@@ -35,11 +36,6 @@ exports.user_signup_post = [
     .isLength({ min: 3, max: 25 })
     .escape()
     .withMessage("User name must be between 3 and 25 characters long"),
-  body("username")
-    .trim()
-    .isLength({ min: 3, max: 25 })
-    .escape()
-    .withMessage("User name must be between 3 and 25 characters long"),
   body("password")
     .trim()
     .isLength({ min: 6 })
@@ -62,14 +58,19 @@ exports.user_signup_post = [
       });
       return;
     }
-
     // If its valid
+    // encrypt password
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+      if (err) {
+        return next(err)
+      }
+
     // Create new user
     const newUser = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
       membershipStatus: "regular",
     })
 
@@ -77,21 +78,64 @@ exports.user_signup_post = [
       if (err) {
         return next(err);
       }
-      // If the user was saved successfully, redirect to main page
-      res.redirect('/')
+      next();
     })
-  }
+    })
+  },
+  // If the user was saved successfully, redirect to main page
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/user/sign-up"
+  })
 ]
 
 // Show login form
 exports.user_login_get = (req, res, next) => {
   res.render("log-in", { title: "Log in" });
 };
+
 // Log in
-exports.user_login_post =  passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/"
-});
+exports.user_login_post =  [
+body("username")
+  .trim()
+  .isLength({ min: 3, max: 25 })
+  .escape()
+  .withMessage("User name must be between 3 and 25 characters long"),
+body("password")
+  .trim()
+  .isLength({ min: 6 })
+  .withMessage("Password must be at least 6 characters long"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    // if validation didn't succeed
+    if (!errors.isEmpty()) {
+      // Re render form with errors
+      res.render("log-in", {
+        title: "Log In",
+        user: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+    next();
+  },
+   // validate log in
+   passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/user/log-in",
+    failureMessage: true,
+  })
+];
+
+// Log Out
+exports.user_logout =  (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+}
 
 // Show form to make user a member
 exports.user_change_member_get = (req, res, next) => {

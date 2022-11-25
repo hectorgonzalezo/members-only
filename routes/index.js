@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Members only', user: req.user });
+  res.render('index', { title: 'Members only' });
 });
 
 module.exports = router;

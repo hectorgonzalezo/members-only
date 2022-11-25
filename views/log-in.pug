@@ -24,3 +24,8 @@ block content
         required
       )
     button Log In
+
+    p= session.messages
+    if errors 
+      each error in errors 
+        p= error

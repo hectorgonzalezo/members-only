@@ -19,28 +19,35 @@ html(lang="en")
       h1
         a(href="/") Members only
       ul 
-        |
-        li
-          a(href="/message/create") 
-            button 
-              i.fa-solid.fa-message.fa-xs
-              |Create message
-        li
-          a(href="/user/change-member") 
-            button 
-              i.fa-solid.fa-unlock.fa-xs
-              |Add member status
-        li
-          a(href="/user/sign-up") 
-            button 
-              i.fa-solid.fa-user-plus.fa-xs
-              |Sign up
-        li 
+        if currentUser !== undefined
           |
-          a(href="/user/log-in") 
-            button 
-              i.fa-solid.fa-right-to-bracket.fa-xs
-              | Log In
+          li
+            a(href="/message/create") 
+              button 
+                i.fa-solid.fa-message.fa-xs
+                |Create message
+          li
+            a(href="/user/change-member") 
+              button 
+                i.fa-solid.fa-unlock.fa-xs
+                |Add member status
+          li
+            a(href="/user/log-out") 
+              button 
+                i.fa-solid.fa-right-from-bracket.fa-xs
+                |Log Out
+        else
+          li
+            a(href="/user/sign-up") 
+              button 
+                i.fa-solid.fa-user-plus.fa-xs
+                |Sign Up
+          li 
+            |
+            a(href="/user/log-in") 
+              button 
+                i.fa-solid.fa-right-to-bracket.fa-xs
+                | Log In
 
     main 
       block content
