@@ -6,13 +6,36 @@ block content
     p Already have an account? 
       a(href="/user/sign-up") Log In
     .input_wrapper
-      label.form-label(for="username") User Name:
+      label.form-label(for="firstName") First Name:
+      input#name.form-control.form-control-sm(
+        type="text",
+        name="firstName",
+        minlength="3",
+        maxlength="25",
+        placeholder="Juan",
+        value=(user !== undefined ? user.firstName: '')
+        required
+      )
+    .input_wrapper
+      label.form-label(for="lastName") Last Name:
+      input#name.form-control.form-control-sm(
+        type="text",
+        name="lastName",
+        minlength="3",
+        maxlength="25",
+        placeholder="Perez",
+        value=(user !== undefined ? user.lastName: '')
+        required
+      )
+    .input_wrapper
+      label.form-label(for="username") Username:
       input#name.form-control.form-control-sm(
         type="text",
         name="username",
         minlength="3",
         maxlength="25",
-        placeholder="User Name",
+        placeholder="Username",
+        value=(user !== undefined ? user.username : '')
         required
       )
     .input_wrapper
@@ -32,3 +55,7 @@ block content
         required
       )
     button Sign up
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
