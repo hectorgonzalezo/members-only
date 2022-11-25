@@ -3,6 +3,9 @@ extends layout
 block content
   h1= title
   if currentUser !== undefined
-    h2 Welcome back #{currentUser.firstName}
+    if currentUser.membershipStatus === "regular"
+      h2 Welcome back #{currentUser.firstName}
+    else 
+      h2 Welcome <em>member</em> #{currentUser.firstName}
   else
     h2 Welcome to #{ title }

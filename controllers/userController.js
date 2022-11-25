@@ -151,7 +151,39 @@ exports.user_logout = (req, res, next) => {
 exports.user_change_member_get = (req, res, next) => {
   res.render("change-member", { title: "Change member status" });
 };
+
 // Make user a member
-exports.user_change_member_post = (req, res, next) => {
-  req.send("Change user to member POST");
-};
+// Test password with the one provided by environment variable.
+exports.user_change_member_post = [
+  body("password")
+    .trim()
+    .equals(process.env.MEMBER_PASSWORD)
+    .withMessage("Wrong password"),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      // if validation didn't succeed
+      if (!errors.isEmpty()) {
+        // Re render form with errors
+        res.render("change-member", {
+          title: "Change member status",
+          error: "Incorrect password",
+        });
+        return;
+      }
+      const userID = res.locals.currentUser._id;
+      const user = { 
+        firstName: res.locals.currentUser.firstName,
+        lastName: res.locals.currentUser.lastName,
+        password: res.locals.currentUser.password,
+        membershipStatus: "member",
+        _id: userID,
+      }
+
+      User.findByIdAndUpdate(userID, user, {}, (userErr, updatedUser) =>{
+        if (userErr) {
+          return next(userErr)
+        }
+        res.redirect('/');
+      });
+    }
+]

@@ -10,6 +10,10 @@ block content
         type="password",
         name="password",
         minlength="6",
+        class=(error == "Incorrect password" ? "is-invalid" : ""),
         required
       )
+      if error == "Incorrect password"
+        .invalid-feedback 
+          |Incorrect password
     button Add member Status

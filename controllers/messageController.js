@@ -11,7 +11,6 @@ exports.message_detail = (req, res) => {
 
 // Show form to create new message
 exports.message_create_get = (req, res) => {
-  console.log('si')
   res.render('message-create', { title: "Create message" });
 }
 

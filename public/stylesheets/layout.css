@@ -75,6 +75,9 @@ h2 {
   .items > a:first-child {
     justify-self: center; }
 
+em {
+  color: #31a194; }
+
 main {
   background-color: #333333ff;
   color: white;
