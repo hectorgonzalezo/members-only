@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -71,12 +72,15 @@ passport.deserializeUser((id, done) => {
 
 // add support for local session
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session())
 // allow access to currenUser variable in views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  res.locals.session = req.session;
+  res.locals.success_alert_message = req.flash('success_alert_message');
+  res.locals.error_message = req.flash('error_message');
+  res.locals.error = req.flash('error');
   next();
 });
 app.use(logger('dev'));

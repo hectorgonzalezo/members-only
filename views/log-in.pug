@@ -13,19 +13,26 @@ block content
         minlength="3",
         maxlength="25",
         placeholder="User Name",
+        class=(error == "Incorrect username" ? "is-invalid" : "")
         required
       )
+      if error == "Incorrect username"
+        .invalid-feedback 
+          |Incorrect username
     .input_wrapper
       label.form-label(for="password") Password:
       input#name.form-control.form-control-sm(
         type="password",
         name="password",
         minlength="6",
+        class=(error == "Incorrect password" ? "is-invalid" : "")
         required
       )
+      if error == "Incorrect password"
+        .invalid-feedback 
+          |Incorrect password
     button Log In
 
-    p= session.messages
     if errors 
       each error in errors 
         p= error

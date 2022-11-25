@@ -5,7 +5,7 @@
   font-size: clamp(13px, 3vw, 16px);
 }
 
-:root button{
+body button:not(.btn){
   border: none;
   background-color: $pine-green;
   color: white;
@@ -138,9 +138,14 @@ form{
       flex-shrink: 0;
       font-size: 1rem;
     }
-    & > *:last-child{
+    & > *:nth-child(2){
       flex-grow: 1;
       flex-basis:150px;
+    }
+
+    & > div {
+      text-align: center;
+      color: rgb(255, 182, 182);
     }
 
     input[type="number"], select {

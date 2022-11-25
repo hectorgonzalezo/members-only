@@ -85,7 +85,8 @@ exports.user_signup_post = [
   // If the user was saved successfully, redirect to main page
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/user/sign-up"
+    failureRedirect: "/user/sign-up",
+    failureFlash: true
   })
 ]
 
@@ -119,12 +120,14 @@ body("password")
     }
     next();
   },
-   // validate log in
-   passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/log-in",
-    failureMessage: true,
-  })
+  (req, res, next) => {
+    // validate log in
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/user/log-in",
+      failureFlash: true,
+    })(req, res, next);
+  }
 ];
 
 // Log Out
