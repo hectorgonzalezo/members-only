@@ -1,36 +1,30 @@
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const aysnc = require("async");
-
 
 const User = require("../models/userModel");
 
 // Show only a particular user
 exports.user_detail = (req, res) => {
-  req.send("show user")
-}
+  req.send("show user");
+};
 
 // Show form to create new user
 exports.user_signup_get = (req, res, next) => {
   res.render("sign-up", { title: "Sign up" });
-}
+};
 // Add user to database
 exports.user_signup_post = [
   body("firstName")
     .trim()
     .isLength({ min: 3, max: 25 })
     .escape()
-    .withMessage("First name must be between 3 and 25 characters long")
-    .isAlpha()
-    .withMessage("First name can only contain letters"),
+    .withMessage("First name must be between 3 and 25 characters long"),
   body("lastName")
     .trim()
     .isLength({ min: 3, max: 25 })
     .escape()
-    .withMessage("Last name must be between 3 and 25 characters long")
-    .isAlpha()
-    .withMessage("Last name can only contain letters"),
+    .withMessage("Last name must be between 3 and 25 characters long"),
   body("username")
     .trim()
     .isLength({ min: 3, max: 25 })
@@ -62,33 +56,46 @@ exports.user_signup_post = [
     // encrypt password
     bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
       if (err) {
-        return next(err)
-      }
-
-    // Create new user
-    const newUser = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      username: req.body.username,
-      password: hashedPassword,
-      membershipStatus: "regular",
-    })
-
-    newUser.save((err) => {
-      if (err) {
         return next(err);
       }
-      next();
-    })
-    })
+
+      // look if username already exists
+      User.find({ username: req.body.username }).exec((err, user) => {
+        if (user.length !== 0) {
+          res.render("sign-up", {
+            title: "Sign Up",
+            user: req.body,
+            error: "Username already exists",
+          });
+        } else {
+          // Create new user
+          const newUser = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            username: req.body.username,
+            password: hashedPassword,
+            membershipStatus: "regular",
+          });
+
+          newUser.save((userErr) => {
+            if (userErr) {
+              return next(userErr);
+            }
+            next();
+          });
+        }
+      });
+    });
   },
-  // If the user was saved successfully, redirect to main page
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/sign-up",
-    failureFlash: true
-  })
-]
+  (req, res, next) => {
+    // If the user was saved successfully, redirect to main page
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/user/sign-up",
+      failureFlash: true,
+    })(req, res, next);
+  },
+];
 
 // Show login form
 exports.user_login_get = (req, res, next) => {
@@ -96,16 +103,16 @@ exports.user_login_get = (req, res, next) => {
 };
 
 // Log in
-exports.user_login_post =  [
-body("username")
-  .trim()
-  .isLength({ min: 3, max: 25 })
-  .escape()
-  .withMessage("User name must be between 3 and 25 characters long"),
-body("password")
-  .trim()
-  .isLength({ min: 6 })
-  .withMessage("Password must be at least 6 characters long"),
+exports.user_login_post = [
+  body("username")
+    .trim()
+    .isLength({ min: 3, max: 25 })
+    .escape()
+    .withMessage("User name must be between 3 and 25 characters long"),
+  body("password")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
   (req, res, next) => {
     const errors = validationResult(req);
     // if validation didn't succeed
@@ -127,24 +134,24 @@ body("password")
       failureRedirect: "/user/log-in",
       failureFlash: true,
     })(req, res, next);
-  }
+  },
 ];
 
 // Log Out
-exports.user_logout =  (req, res, next) => {
+exports.user_logout = (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
     }
     res.redirect("/");
   });
-}
+};
 
 // Show form to make user a member
 exports.user_change_member_get = (req, res, next) => {
-  res.render('change-member', { title: "Change member status" });
-}
+  res.render("change-member", { title: "Change member status" });
+};
 // Make user a member
 exports.user_change_member_post = (req, res, next) => {
-  req.send("Change user to member POST")
-}
+  req.send("Change user to member POST");
+};

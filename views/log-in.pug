@@ -6,13 +6,13 @@ block content
     p Don't have an account? 
       a(href="/user/sign-up") Sign Up
     .input_wrapper
-      label.form-label(for="username") User Name:
+      label.form-label(for="username") Username:
       input#name.form-control.form-control-sm(
         type="text",
         name="username",
         minlength="3",
         maxlength="25",
-        placeholder="User Name",
+        placeholder="Username",
         class=(error == "Incorrect username" ? "is-invalid" : "")
         required
       )
