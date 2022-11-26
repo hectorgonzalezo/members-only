@@ -1,5 +1,4 @@
 const { body, validationResult } = require("express-validator");
-const aysnc = require("async");
 
 
 const Message = require("../models/messageModel");
@@ -11,13 +10,50 @@ exports.message_detail = (req, res) => {
 
 // Show form to create new message
 exports.message_create_get = (req, res) => {
-  res.render('message-create', { title: "Create message" });
+  res.render("message-create", { title: "Create new message" })
 }
 
 // Add message to database
-exports.message_create_post = (req, res) => {
-  req.send("create message POST")
-}
+exports.message_create_post = [
+  body("title", "Title is required")
+    .trim()
+    .escape()
+    .isLength({ min: 1, max: 50 })
+    .withMessage("Title length must be between 1 and 50 characters"),
+  body("message", "Message is required")
+    .trim()
+    .escape()
+    .isLength({ min: 1})
+    .withMessage("Message cannot be empty"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    // if validation didn't succeed
+    if (!errors.isEmpty()) {
+      // Re render form with errors
+      res.render("message-create", {
+        title: "Create new message",
+        message: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    // create new message
+    const newMessage = new Message({
+      title: req.body.title,
+      text: req.body.message,
+      poster: res.locals.currentUser._id,
+    });
+
+    // save it in database
+    newMessage.save((messageErr) => {
+      if(messageErr) {
+        return next(messageErr);
+      }
+      res.redirect('/');
+    })
+  }
+]
 
 // Show confirmation to delete message
 exports.message_delete_get = (req, res) => {

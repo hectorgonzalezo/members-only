@@ -5,21 +5,26 @@ block content
     h1= title
     .input_wrapper
       label.form-label(for="title") Title:
-      input#name.form-control.form-control-sm(
+      input#title.form-control.form-control-sm(
         type="text",
-        name="username",
-        minlength="3",
+        name="title",
+        minlength="1",
         maxlength="50",
         placeholder="Message title",
         required
       )
     .input_wrapper
       label.form-label(for="message") Message:
-      textarea#name.form-control.form-control-sm(
+      textarea#message.form-control.form-control-sm(
         type="text",
         name="message",
-        minlength="3",
+        minlength="1",
         rows="5"
         required
       )
-    button Create Message
+    button(type="submit") Create Message
+
+    if errors 
+      ul
+        each error in errors
+          li= error.msg
