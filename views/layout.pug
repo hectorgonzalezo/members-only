@@ -22,33 +22,28 @@ html(lang="en")
         if currentUser !== undefined
           |
           li
-            a(href="/message/create") 
-              button 
-                i.fa-solid.fa-message.fa-xs
-                |Create message
+            a.button(href="/message/create") 
+              i.fa-solid.fa-message.fa-xs
+              |Create message
           if currentUser.membershipStatus === "regular"
             li
-              a(href="/user/change-member") 
-                button 
-                  i.fa-solid.fa-unlock.fa-xs
-                  |Add member status
+              a.button(href="/user/change-member") 
+                i.fa-solid.fa-unlock.fa-xs
+                |Add member status
           li
-            a(href="/user/log-out") 
-              button 
-                i.fa-solid.fa-right-from-bracket.fa-xs
-                |Log Out
+            a.button(href="/user/log-out") 
+              i.fa-solid.fa-right-from-bracket.fa-xs
+              |Log Out
         else
           li
-            a(href="/user/sign-up") 
-              button 
-                i.fa-solid.fa-user-plus.fa-xs
-                |Sign Up
+            a.button(href="/user/sign-up") 
+              i.fa-solid.fa-user-plus.fa-xs
+              |Sign Up
           li 
             |
-            a(href="/user/log-in") 
-              button 
-                i.fa-solid.fa-right-to-bracket.fa-xs
-                | Log In
+            a.button(href="/user/log-in") 
+              i.fa-solid.fa-right-to-bracket.fa-xs
+              | Log In
 
     main 
       block content
