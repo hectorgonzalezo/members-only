@@ -9,3 +9,11 @@ block content
       h2 Welcome <em>member</em> #{currentUser.firstName}
   else
     h2 Welcome to #{ title }
+  if messages
+    .messages 
+      each message in messages 
+        .message
+          h1= message.title 
+          p= message.text 
+          p= message.timeStamp 
+          p= message.poster.username
