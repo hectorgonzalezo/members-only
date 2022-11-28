@@ -11,20 +11,16 @@ exports.user_detail = (req, res) => {
 
 // Show form to create new user
 exports.user_signup_get = (req, res, next) => {
-  res.render("sign-up", { title: "Sign up" });
+  fetch('https://ranmoji.herokuapp.com/emojis/api/v.1.0/')
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.emoji)
+      res.render("sign-up", { title: "Sign up", emoji: data.emoji });
+    })
 };
 // Add user to database
 exports.user_signup_post = [
-  body("firstName")
-    .trim()
-    .isLength({ min: 3, max: 25 })
-    .escape()
-    .withMessage("First name must be between 3 and 25 characters long"),
-  body("lastName")
-    .trim()
-    .isLength({ min: 3, max: 25 })
-    .escape()
-    .withMessage("Last name must be between 3 and 25 characters long"),
+  body("icon", "User icon is required"),
   body("username")
     .trim()
     .isLength({ min: 3, max: 25 })
@@ -45,11 +41,16 @@ exports.user_signup_post = [
     // if validation didn't succeed
     if (!errors.isEmpty()) {
       // Re render form with errors
-      res.render("sign-up", {
-        title: "Sign Up",
-        user: req.body,
-        errors: errors.array(),
-      });
+      fetch("https://ranmoji.herokuapp.com/emojis/api/v.1.0/")
+            .then((response) => response.json())
+            .then((data) => {
+              res.render("sign-up", {
+                title: "Sign Up",
+                user: req.body,
+                emoji: data.emoji,
+                error: "Username already exists",
+              });
+            });
       return;
     }
     // If its valid
@@ -62,16 +63,21 @@ exports.user_signup_post = [
       // look if username already exists
       User.find({ username: req.body.username }).exec((err, user) => {
         if (user.length !== 0) {
-          res.render("sign-up", {
-            title: "Sign Up",
-            user: req.body,
-            error: "Username already exists",
-          });
+          fetch("https://ranmoji.herokuapp.com/emojis/api/v.1.0/")
+            .then((response) => response.json())
+            .then((data) => {
+              res.render("sign-up", {
+                title: "Sign Up",
+                user: req.body,
+                emoji: data.emoji,
+                error: "Username already exists",
+              });
+            });
         } else {
+          console.log(req.body.icon)
           // Create new user
           const newUser = new User({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            icon: req.body.icon,
             username: req.body.username,
             password: hashedPassword,
             membershipStatus: "regular",

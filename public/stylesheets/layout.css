@@ -11,9 +11,22 @@
   border-radius: 16px;
   box-shadow: 0px 3px 7px 3px black;
   display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   gap: 5px;
   max-width: 700px; }
+  .message .icon {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    background-color: inherit;
+    font-size: clamp(3rem, 8vw, 5rem);
+    align-self: center;
+    justify-self: center; }
+  .message *:not(.icon):not(h1) {
+    grid-column: 2 /3; }
   .message h1 {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
     text-align: center;
     font-size: 2rem; }
   .message p:not(.info) {
@@ -36,7 +49,7 @@
       align-self: end; }
 
 :root {
-  font-size: clamp(13px, 3vw, 16px); }
+  font-size: clamp(12px, 3vw, 16px); }
 
 body button:not(.btn),
 .button {
@@ -45,9 +58,10 @@ body button:not(.btn),
   color: white;
   font-size: clamp(1rem, 2vw, 1.3rem);
   border-radius: 12px;
-  padding: 5px 12px 5px 12px;
+  padding: 5px 10px 5px 10px;
   box-shadow: 1px 1px 2px black;
-  position: relative; }
+  position: relative;
+  text-overflow: clip; }
   body button:not(.btn):hover,
   .button:hover {
     background-color: #31a194;
@@ -86,13 +100,15 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px; }
+  gap: 15px; }
   header img {
     height: 48px; }
   header ul {
     display: flex;
     align-items: center;
-    gap: 20px; }
+    justify-content: space-evenly;
+    padding: 0px;
+    gap: 10px; }
   header a:not(.button) {
     color: white;
     display: flex;
@@ -123,6 +139,9 @@ h2 {
 em {
   color: #31a194; }
 
+.hidden {
+  display: none; }
+
 main {
   background-color: #333333ff;
   color: white;
@@ -143,6 +162,10 @@ form {
   background-color: #696969ff;
   border-radius: 16px;
   box-shadow: 0px 0px 6px 2px black; }
+  form .user_icon {
+    align-self: center; }
+    form .user_icon h2 {
+      font-size: 5rem; }
   form p {
     font-size: 0.9rem; }
     form p a {
@@ -191,10 +214,21 @@ footer {
     width: 36px;
     height: 36px; }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   header {
-    flex-direction: column; }
+    flex-direction: column;
+    gap: 5px; }
+    header ul {
+      width: 100%;
+      padding: 0px;
+      margin: 0px; }
   body {
     grid-template-rows: 130px auto 100px; } }
+
+@media (max-width: 400px) {
+  ul {
+    justify-content: space-between; }
+  .button {
+    font-size: 0.9rem; } }
 
 /*# sourceMappingURL=layout.css.map */

@@ -15,6 +15,7 @@ block content
       each message in messages 
         .message
           h1= message.title 
+          h2.icon!= message.poster.icon
           p= message.text 
           if currentUser !== undefined
             if currentUser.membershipStatus !== "regular"

@@ -5,28 +5,11 @@ block content
     h1= title
     p Already have an account? 
       a(href="/user/sign-up") Log In
-    .input_wrapper
-      label.form-label(for="firstName") First Name:
-      input#firstName.form-control.form-control-sm(
-        type="text",
-        name="firstName",
-        minlength="3",
-        maxlength="25",
-        placeholder="First Name",
-        value=(user !== undefined ? user.firstName: '')
-        required
-      )
-    .input_wrapper
-      label.form-label(for="lastName") Last Name:
-      input#lastName.form-control.form-control-sm(
-        type="text",
-        name="lastName",
-        minlength="3",
-        maxlength="25",
-        placeholder="Last Name",
-        value=(user !== undefined ? user.lastName: '')
-        required
-      )
+    .user_icon
+      h3 Your icon:
+      h2!= emoji
+      a.button(href="") Change
+      input.hidden(type="text" name="icon" value= emoji)
     .input_wrapper
       label.form-label(for="username") Username:
       input#username.form-control.form-control-sm(

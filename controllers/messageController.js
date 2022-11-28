@@ -10,7 +10,12 @@ exports.message_detail = (req, res) => {
 
 // Show form to create new message
 exports.message_create_get = (req, res) => {
-  res.render("message-create", { title: "Create new message" })
+  fetch('https://ranmoji.herokuapp.com/emojis/api/v.1.0/')
+    .then((response) => response.json())
+    .then((emoji) => {
+      console.log(emoji)
+      res.render("message-create", { title: "Create new message" })
+    })
 }
 
 // Add message to database
