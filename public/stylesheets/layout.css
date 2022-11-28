@@ -87,13 +87,17 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 20px; }
+  header img {
+    height: 48px; }
   header ul {
     display: flex;
     align-items: center;
     gap: 20px; }
-  header a {
-    color: white; }
-    header a:hover {
+  header a:not(.button) {
+    color: white;
+    display: flex;
+    gap: 5px; }
+    header a:not(.button):hover {
       color: #59e0d0; }
 
 body a {

@@ -61,16 +61,21 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  img {
+    height: 48px;
+  }
   ul {
     display: flex;
     align-items: center;
     gap: 20px;
   }
-  a{
+  a:not(.button){
     color: white;
     &:hover{
       color: $pine-green-light;
     }
+    display: flex;
+    gap: 5px;
   }
 }
 

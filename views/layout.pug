@@ -11,13 +11,22 @@ html(lang="en")
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65",
       crossorigin="anonymous"
     )
+    if currentUser === undefined || currentUser.membershipStatus === "regular"
+      link(rel="icon", href="/images/locked.png")
+    else 
+      link(rel="icon", href="/images/unlocked.png")
     script(src="https://kit.fontawesome.com/41e3d8f3a5.js" crossorigin="anonymous")
     title= title
   body 
     |
     header
       h1
-        a(href="/") Members only
+        a(href="/") 
+          if currentUser === undefined || currentUser.membershipStatus === "regular"
+            img(src="/images/locked.png", alt="members only")
+          else 
+            img(src="/images/unlocked.png", alt="members only")
+          |Members only
       ul 
         if currentUser !== undefined
           |
