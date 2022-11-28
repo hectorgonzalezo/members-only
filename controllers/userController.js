@@ -74,7 +74,6 @@ exports.user_signup_post = [
               });
             });
         } else {
-          console.log(req.body.icon)
           // Create new user
           const newUser = new User({
             icon: req.body.icon,
