@@ -1,4 +1,34 @@
 @import url(./reset.css);
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: MIN(80vw, 700px); }
+
+.message {
+  background-color: #033933ff;
+  padding: 15px;
+  border-radius: 16px;
+  box-shadow: 0px 3px 7px 3px black;
+  display: grid;
+  gap: 5px;
+  max-width: 700px; }
+  .message h1 {
+    text-align: center;
+    font-size: 2rem; }
+  .message p:not(.info) {
+    font-size: 1rem; }
+  .message i {
+    font-style: italic;
+    color: #59e0d0; }
+  .message > *:not(h1) {
+    background-color: #4f4f4fff;
+    border-radius: 16px;
+    padding: 5px 10px 5px 10px; }
+  .message .info {
+    justify-self: left;
+    font-size: 0.7rem; }
+
 :root {
   font-size: clamp(13px, 3vw, 16px); }
 

@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  h1= title
   if currentUser !== undefined
     if currentUser.membershipStatus === "regular"
       h2 Welcome back #{currentUser.firstName}
@@ -15,5 +14,5 @@ block content
         .message
           h1= message.title 
           p= message.text 
-          p= message.timeStamp 
-          p= message.poster.username
+          if currentUser !== undefined && currentUser.membershipStatus !== "regular"
+            p.info #{message.formattedTimeStamp} by <i>#{message.poster.username}</i>
