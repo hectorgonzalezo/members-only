@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  form(action="" method="POST") 
+    h1= title
+    p Wanna be an administrator? Please write the secret password:
+    .input_wrapper
+      label.form-label(for="password") Password:
+      input#name.form-control.form-control-sm(
+        type="password",
+        name="password",
+        minlength="6",
+        class=(error == "Incorrect password" ? "is-invalid" : ""),
+        required
+      )
+      if error == "Incorrect password"
+        .invalid-feedback 
+          |Incorrect password
+    button Make administrator

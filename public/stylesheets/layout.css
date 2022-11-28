@@ -28,6 +28,12 @@
   .message .info {
     justify-self: left;
     font-size: 0.7rem; }
+  .message form {
+    width: inherit;
+    background-color: inherit;
+    box-shadow: none; }
+    .message form button {
+      align-self: end; }
 
 :root {
   font-size: clamp(13px, 3vw, 16px); }

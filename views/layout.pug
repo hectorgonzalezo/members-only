@@ -30,6 +30,11 @@ html(lang="en")
               a.button(href="/user/change-member") 
                 i.fa-solid.fa-unlock.fa-xs
                 |Add member status
+          if currentUser.membershipStatus === "member"
+            li
+              a.button(href="/user/make-admin") 
+                i.fa-solid.fa-unlock.fa-xs
+                |Make Admin
           li
             a.button(href="/user/log-out") 
               i.fa-solid.fa-right-from-bracket.fa-xs

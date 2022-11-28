@@ -55,12 +55,14 @@ exports.message_create_post = [
   }
 ]
 
-// Show confirmation to delete message
-exports.message_delete_get = (req, res) => {
-  req.send("delete message GET")
-}
-
 // Delete message from database
-exports.message_delete_post = (req, res) => {
-  req.send("delete message POST")
+exports.message_delete = (req, res, next) => {
+  // Find message and delete
+  Message.findByIdAndDelete(req.params.id, (err, message) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/')
+  }
+  );
 }

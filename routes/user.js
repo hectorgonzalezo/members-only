@@ -18,4 +18,8 @@ router.get('/log-out', userController.user_logout);
 router.get('/change-member', userController.user_change_member_get);
 router.post('/change-member', userController.user_change_member_post);
 
+// Add member status page
+router.get('/make-admin', userController.user_make_admin_get);
+router.post('/make-admin', userController.user_make_admin_post);
+
 module.exports = router;

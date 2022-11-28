@@ -33,4 +33,12 @@
     justify-self: left;
     font-size: 0.7rem;
   }
+  form{
+    width: inherit;
+    background-color: inherit;
+    box-shadow: none;
+    button{
+      align-self: end
+    }
+  }
 }

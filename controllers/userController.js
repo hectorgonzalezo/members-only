@@ -187,3 +187,45 @@ exports.user_change_member_post = [
       });
     }
 ]
+
+
+// Show form to make user admin
+exports.user_make_admin_get = (req, res, next) => {
+  res.render("make-admin", { title: "Make user administrator" });
+};
+
+// Make user administrator
+// Test password with the one provided by environment variable.
+exports.user_make_admin_post = [
+  body("password")
+    .trim()
+    .equals(process.env.ADMIN_PASSWORD)
+    .withMessage("Wrong password"),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      // if validation didn't succeed
+      if (!errors.isEmpty()) {
+        // Re render form with errors
+        res.render("make-admin", {
+          title: "Make user administrator",
+          error: "Incorrect password",
+        });
+        return;
+      }
+      const userID = res.locals.currentUser._id;
+      const user = { 
+        firstName: res.locals.currentUser.firstName,
+        lastName: res.locals.currentUser.lastName,
+        password: res.locals.currentUser.password,
+        membershipStatus: "admin",
+        _id: userID,
+      }
+
+      User.findByIdAndUpdate(userID, user, {}, (userErr, updatedUser) =>{
+        if (userErr) {
+          return next(userErr)
+        }
+        res.redirect('/');
+      });
+    }
+]

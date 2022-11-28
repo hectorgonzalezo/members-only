@@ -4,8 +4,10 @@ block content
   if currentUser !== undefined
     if currentUser.membershipStatus === "regular"
       h2 Welcome back #{currentUser.firstName}
-    else 
+    else if currentUser.membershipStatus === "member"
       h2 Welcome <em>member</em> #{currentUser.firstName}
+    else
+      h2 Welcome <em>administrator</em> #{currentUser.firstName}
   else
     h2 Welcome to #{ title }
   if messages
@@ -14,5 +16,10 @@ block content
         .message
           h1= message.title 
           p= message.text 
-          if currentUser !== undefined && currentUser.membershipStatus !== "regular"
-            p.info #{message.formattedTimeStamp} by <i>#{message.poster.username}</i>
+          if currentUser !== undefined
+            if currentUser.membershipStatus !== "regular"
+              p.info #{message.formattedTimeStamp} by <i>#{message.poster.username}</i>
+            if currentUser.membershipStatus === "admin"
+              form(action=`/message/delete/${message._id}` method="POST") 
+                button(data) Delete Post
+          
