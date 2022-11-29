@@ -3,11 +3,11 @@ extends layout
 block content
   if currentUser !== undefined
     if currentUser.membershipStatus === "regular"
-      h2 Welcome back #{currentUser.firstName}
+      h2 Welcome back #{currentUser.username}
     else if currentUser.membershipStatus === "member"
-      h2 Welcome <em>member</em> #{currentUser.firstName}
+      h2 Welcome <em>member</em> #{currentUser.username}
     else
-      h2 Welcome <em>administrator</em> #{currentUser.firstName}
+      h2 Welcome <em>administrator</em> #{currentUser.username}
   else
     h2 Welcome to #{ title }
   if messages

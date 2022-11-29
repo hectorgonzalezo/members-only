@@ -6,6 +6,8 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
+const compression = require("compression");
+const helmet = require("helmet");
 const bcrypt = require("bcryptjs");
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -31,6 +33,8 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -75,7 +79,8 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session())
-// allow access to currenUser variable in views
+
+// allow access to currentUser variable in views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success_alert_message = req.flash('success_alert_message');
@@ -93,6 +98,7 @@ app.use(sassMiddleware({
   indentedSyntax: false,
   sourceMap: true
 }));
+app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRoute);
