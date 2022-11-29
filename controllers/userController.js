@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const fetch = require("node-fetch");
 
 const User = require("../models/userModel");
 
@@ -14,7 +15,6 @@ exports.user_signup_get = (req, res, next) => {
   fetch('https://ranmoji.herokuapp.com/emojis/api/v.1.0/')
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.emoji)
       res.render("sign-up", { title: "Sign up", emoji: data.emoji });
     })
 };
